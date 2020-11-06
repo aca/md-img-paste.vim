@@ -100,7 +100,9 @@ function! s:SaveFileTMPMacOS(imgdir, tmpname) abort
     let clip_command .= ' (POSIX file \"' . tmpfile . '\") with write permission"'
     let clip_command .= ' -e "write png_data to referenceNumber"'
 
-    silent call system(clip_command)
+    let clip_command = 'copyq read image/png 0 > ' .tmpfile
+
+    call system(clip_command)
     if v:shell_error == 1
         return 1
     else
